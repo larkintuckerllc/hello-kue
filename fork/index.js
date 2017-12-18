@@ -8,6 +8,7 @@ app.get('/intense', (req, res) => {
   const worker = fork('./worker');
   worker.on('message', ({ fruit }) => {
     res.send(`Hello Intense ${fruit}!`);
+    worker.kill();
   });
   worker.send({ letter: 'a' });
 });
