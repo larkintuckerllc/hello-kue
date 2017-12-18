@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 const express = require('express');
-const { sleep } = require('sleep');
+const { fork } = require('child_process');
 
 const app = express();
 app.get('/', (req, res) => res.send('Hello World!'));
 app.get('/intense', (req, res) => {
-  sleep(5); // ARTIFICIAL CPU INTENSIVE
-  res.send('Hello Intense!');
+  const worker = fork('./worker');
+  worker.on('message', ({ fruit }) => {
+    res.send(`Hello Intense ${fruit}!`);
+  });
+  worker.send({ letter: 'a' });
 });
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
