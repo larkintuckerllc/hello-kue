@@ -4,7 +4,8 @@ const kue = require('kue');
 const queue = kue.createQueue();
 console.log('INDEX CONNECTED');
 const job = queue.create('mytype', {
-  name: 'a',
+  title: 'mytitle',
+  letter: 'a',
 })
   .removeOnComplete(true)
   .save((err) => {

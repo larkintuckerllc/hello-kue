@@ -5,5 +5,11 @@ const queue = kue.createQueue();
 console.log('WORKER CONNECTED');
 queue.process('mytype', (job, done) => {
   console.log('WORKER JOB COMPLETE');
-  done(null, 'apple');
+  switch (job.data.letter) {
+    case 'a':
+      done(null, 'apple');
+      break;
+    default:
+      done(null, 'unknown');
+  }
 });
